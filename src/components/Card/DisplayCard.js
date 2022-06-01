@@ -7,13 +7,11 @@ const DisplayCard = () => {
   const classes = useStyle();
 
   return (
-    <div>
-      <Card className={classes.card1}>
-        <CardContent className={classes.content}>
-          <Avatar className={classes.avatar}>.</Avatar>
-        </CardContent>
-      </Card>
-    </div>
+    <Card className={classes.card1}>
+      <CardContent className={classes.content}>
+        <Avatar className={classes.avatar}>.</Avatar>
+      </CardContent>
+    </Card>
   );
 };
 

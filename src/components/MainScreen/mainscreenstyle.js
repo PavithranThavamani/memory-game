@@ -3,15 +3,10 @@ import { makeStyles } from "@material-ui/core/styles";
 export default makeStyles(() => ({
   box: {
     transform: "scale(0.9)",
-    // border: "1px solid black",
-    // margin: "20px",
-
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     padding: "0px 10px",
-    // height: "490px",
-    // width: "1100px",
   },
 
   box1: {
@@ -27,7 +22,7 @@ export default makeStyles(() => ({
   box2: {
     width: "300px",
     height: "550px",
-    border: "1px solid black",
+    border: "2px solid black",
     borderLeft: 0,
     textAlign: "center",
   },
