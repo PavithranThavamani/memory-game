@@ -4,20 +4,32 @@ export default makeStyles({
   card1: {
     backgroundColor: "#d5d5d5",
     margin: "10px",
-    width: "110px",
-    height: "150px",
+    width: "120px",
+    height: "160px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: "25px",
-    // backgroundColor: "red",
+    // marginLeft: "-17px",
+  },
+  content: {
+    display: "flex",
+    flexDirection: "column",
+    paddingTop: "20px",
   },
   avatar: {
-    width: "70px",
-    height: "70px",
+    // paddingTop: "10px",
+    marginTop: "10px",
+    width: "80px",
+    height: "80px",
     backgroundColor: "white",
+    color: "black",
+    textAlign: "center",
   },
-  li: {
-    listStyle: "none",
+
+  typo1: {
+    marginTop: "10px",
+    color: "white",
+    textAlign: "center",
   },
 });

@@ -10,7 +10,6 @@ export default makeStyles(() => ({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: "25px",
-    // backgroundColor: "red",
   },
   avatar: {
     width: "70px",

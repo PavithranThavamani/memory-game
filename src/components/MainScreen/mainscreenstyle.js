@@ -25,6 +25,9 @@ export default makeStyles(() => ({
     border: "2px solid black",
     borderLeft: 0,
     textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
 
   playButton: {
@@ -37,5 +40,16 @@ export default makeStyles(() => ({
     "&:hover": {
       backgroundColor: "#a9c4d9",
     },
+  },
+
+  timer: {
+    width: "230px",
+    height: "230px",
+    backgroundColor: "#a9c4d9",
+    marginTop: "20px",
+  },
+
+  typo2: {
+    fontSize: "150px",
   },
 }));
