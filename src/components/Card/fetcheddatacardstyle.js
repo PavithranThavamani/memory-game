@@ -3,14 +3,13 @@ import { makeStyles } from "@material-ui/core/styles";
 export default makeStyles({
   card1: {
     backgroundColor: "#d5d5d5",
-    margin: "10px",
-    width: "120px",
-    height: "160px",
+    marginRight: "15px",
+    width: "110px",
+    height: "150px",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     borderRadius: "25px",
-    // marginLeft: "-17px",
   },
   content: {
     display: "flex",
@@ -20,16 +19,26 @@ export default makeStyles({
   avatar: {
     // paddingTop: "10px",
     marginTop: "10px",
-    width: "80px",
-    height: "80px",
+    width: "70px",
+    height: "70px",
     backgroundColor: "white",
     color: "black",
     textAlign: "center",
+    alignSelf: "center",
   },
 
   typo1: {
     marginTop: "10px",
     color: "white",
     textAlign: "center",
+    fontSize: "16px",
+  },
+
+  red: {
+    backgroundColor: "red",
+  },
+
+  green: {
+    backgroundColor: "green",
   },
 });
