@@ -1,24 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Avatar, Box, Button, Typography } from "@material-ui/core";
 
 import useStyles from "./mainscreenstyle.js";
-
 import axios from "axios";
 import AllCards from "../Card/AllCards.js";
 import FetchedDataCard from "../Card/FetchedDataCard.js";
-import Timer from "./Timer.js";
-
-const Mainscreen = () => {
+// import Timer from "./MyTimer.js";
+import MyTimer from "./MyTimer.js";
+import BlackCards from "../Card/BlackCards.js";
+// const timerBox = document.getElementById("displayTimerContent");
+const Mainscreen = React.memo(() => {
   const [buttonText, setButtonText] = useState("PLAY");
   const [count, setCount] = useState(0);
   const [fetchData, setFetchData] = useState();
   const [displayTimer, setDisplayTimer] = useState("none");
   const [isActive, setIsActive] = useState(false);
   const [seconds, setSeconds] = useState(3);
-
+  const [dummy, setDummy] = useState(0);
+  const [dataSet, setDataSet] = useState(0);
   const classes = useStyles();
-
+  // useEffect(() => {}, []);
+  const time = new Date();
+  time.setSeconds(time.getSeconds() + 3);
+  // const expiryTimestamp = time;
   const fetchHandler = async () => {
     const response = await axios.get("http://localhost:3000/cardData");
 
@@ -26,43 +31,56 @@ const Mainscreen = () => {
     // console.log(response.data);
 
     changeCount();
+    getArray();
+  };
+
+  // useEffect((e) => {
+  //   e.preventDefault();
+  // }, []);
+
+  const getArray = () => {
+    let array = [];
+    let colorArray = [];
+    if (dummy === 0) {
+      for (let i = 0; i < 15; i++) {
+        array.push(Math.floor(Math.random() * 27));
+        colorArray.push(Math.floor(Math.random() * 2));
+      }
+      // setSet(array);
+      setDummy(1);
+      localStorage.setItem("array", array);
+      localStorage.setItem("colorArray", colorArray);
+    }
+    console.log(array);
+    console.log(colorArray);
   };
 
   const changeCount = () => {
-    setSeconds(3);
-    console.log(seconds);
+    // setSeconds(3);
+
     if (count === 0) {
       setCount(1);
       setButtonText("Stop");
+      // timerBox.style.display = "block";
       setDisplayTimer("block");
       // setSeconds(3)
       setIsActive(true);
-      console.log(`seconds - ${seconds}`);
     } else {
       setCount(0);
       setButtonText("Play");
+      console.log("in else block of change count");
+      time.setSeconds(time.getSeconds() + 3);
+      // timerBox.style.visibility = "visible";
       setDisplayTimer("none");
-      // setSeconds(3);
+      setSeconds(3);
+      setDataSet(0);
       setIsActive(false);
     }
-
-    console.log(count);
-    console.log(`inside change count - ${seconds}`);
   };
-
+  let i = 0;
+  console.log(isActive);
   let dataCount = 0;
-
-  const time = new Date();
-  time.setSeconds(time.getSeconds() + 10);
-
-  // console.log(time);
-
-  console.log(`before excecuting - ${seconds}`);
-
-  const handler = () => {
-    console.log("DONNNNNE");
-  };
-
+  let timer = null;
   return (
     <Box className={classes.box}>
       <div className={classes.box1}>
@@ -79,16 +97,28 @@ const Mainscreen = () => {
             {fetchData &&
               fetchData.map((fetchedData, index) => {
                 if (dataCount < 15) {
-                  // console.log("here");
-                  const getData =
-                    fetchData[Math.floor(Math.random() * fetchData.length)];
-                  // console.log(getData);
-                  // console.log();
+                  let newArray = localStorage.getItem("array").split(",");
+                  let newColorArray = localStorage
+                    .getItem("colorArray")
+                    .split(",");
+                  console.log(newArray);
+
+                  const getData = fetchData[parseInt(newArray[i])];
+                  let j = i;
+                  i = i + 1;
                   dataCount = dataCount + 1;
-                  // console.log(dataCount);
-                  console.log(seconds);
+
                   return (
-                    <li key={index}>{<FetchedDataCard type={getData} />}</li>
+                    <li key={index}>
+                      {dataSet === 0 ? (
+                        <FetchedDataCard
+                          type={getData}
+                          colorIndex={parseInt(newColorArray[j])}
+                        />
+                      ) : (
+                        <BlackCards type={getData} />
+                      )}
+                    </li>
                   );
                 }
               })}
@@ -104,21 +134,26 @@ const Mainscreen = () => {
         >
           {buttonText}
         </Button>
-        <div style={{ display: displayTimer }}>
+        <div id="displayTimerContent" style={{ display: displayTimer }}>
           <Avatar id="timer" className={classes.timer}>
             <Typography variant="h1" className={classes.typo2}>
-              {console.log(seconds)}
-              <Timer isActive={isActive} countDownStartsFrom={seconds} />
-              {console.log("Helo")}
-              {handler}
-              {/* {setDisplayTimer("none")} */}
-              {/* <Timer /> */}
+              {/* <Timer isActive={isActive} countDownStartsFrom={seconds} /> */}
+              {/* {console.log(time)} */}
+              {{ isActive } && (
+                <MyTimer
+                  expiryTimestamp={time}
+                  count={count}
+                  setDisplayTimer={setDisplayTimer}
+                  setDataSet={setDataSet}
+                />
+              )}
+              {seconds}
             </Typography>
           </Avatar>
         </div>
       </div>
     </Box>
   );
-};
+});
 
 export default Mainscreen;

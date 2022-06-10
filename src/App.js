@@ -1,10 +1,14 @@
 import React from "react";
 import Mainscreen from "./components/MainScreen/Mainscreen";
-
+import AfterTimer from "./components/MainScreen/AfterTimer";
+// import { Check } from "@material-ui/icons";
 const App = () => {
+  // 10 minutes timer
   return (
     <div>
       <Mainscreen />
+      {/* <Check /> */}
+      {/* <AfterTimer expiryTimestamp={time} /> */}
     </div>
   );
 };

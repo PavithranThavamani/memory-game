@@ -6,11 +6,12 @@ import FlagIcon from "@material-ui/icons/Flag";
 
 import useStyle from "./fetcheddatacardstyle";
 
-const FetchedDataCard = ({ type }) => {
+const FetchedDataCard = ({ type, colorIndex }) => {
   const classes = useStyle();
 
   let color = ["#00c853", "red"];
-  let randomColor = color[Math.floor(Math.random() * 2)];
+  // let randomColor = color[Math.floor(Math.random() * 2)];
+  let randomColor = color[colorIndex];
   // console.log(randomColor);
   return (
     <div className={classes.box1}>
