@@ -1,52 +1,36 @@
-import React, { useEffect, useState } from "react";
-// import { useTimer } from "use-timer";
+import React, { useEffect } from "react";
+
 import { useTimer } from "react-timer-hook";
 
-function MyTimer({ expiryTimestamp, count, setDisplayTimer, setDataSet }) {
-  const [main, setMain] = useState(false);
-  console.log(setDataSet);
-  const { seconds, isRunning, start, pause, resume, restart, setIsRunning } =
-    useTimer({
-      expiryTimestamp,
-      onExpire: () => {
-        setDisplayTimer("none");
-        setDataSet(1);
-      },
-    });
-  // console.log("asd" + count);
+function MyTimer({
+  expiryTimestamp,
+  count,
+  setDisplayTimer,
+  setDataSet,
+  setTimerVisiblity,
+}) {
+  const { seconds, pause, restart } = useTimer({
+    expiryTimestamp,
+    onExpire: () => {
+      setDisplayTimer("none");
+      setDataSet(1);
+
+      setTimerVisiblity(1);
+    },
+  });
+
   useEffect(() => {
     if (count === 0) pause();
     else {
       const time = new Date();
       time.setSeconds(time.getSeconds() + 3);
       restart(time);
-      // console.log("check");
-      // resume();
     }
   }, [count]);
 
   return (
     <div>
-      {console.log(isRunning, seconds)}
-
       <p style={{ marginTop: "330px" }}>{seconds}</p>
-      {/* <p>{isRunning ? "Running" : "Not running"}</p> */}
-      {/* <div style={{ fontSize: "100px" }}>
-        </div>
-        <button onClick={start}>Start</button>
-        <button onClick={pause}>Pause</button>
-        <button onClick={resume}>Resume</button>
-        <button
-          onClick={() => {
-            const time = new Date();
-            time.setSeconds(time.getSeconds() + 3);
-            restart(time);
-            setMain(false);
-          }}
-        >
-          Restart
-        </button> */}
-      {/* {main && <Mainscreen />} */}
     </div>
   );
 }

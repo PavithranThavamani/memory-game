@@ -9,6 +9,8 @@ import FetchedDataCard from "../Card/FetchedDataCard.js";
 // import Timer from "./MyTimer.js";
 import MyTimer from "./MyTimer.js";
 import BlackCards from "../Card/BlackCards.js";
+
+import ResultBar from "./ResultBar.js";
 // const timerBox = document.getElementById("displayTimerContent");
 const Mainscreen = React.memo(() => {
   const [buttonText, setButtonText] = useState("PLAY");
@@ -19,6 +21,7 @@ const Mainscreen = React.memo(() => {
   const [seconds, setSeconds] = useState(3);
   const [dummy, setDummy] = useState(0);
   const [dataSet, setDataSet] = useState(0);
+  const [timerVisiblity, setTimerVisiblity] = useState(0);
   const classes = useStyles();
   // useEffect(() => {}, []);
   const time = new Date();
@@ -56,29 +59,29 @@ const Mainscreen = React.memo(() => {
   };
 
   const changeCount = () => {
-    // setSeconds(3);
-
     if (count === 0) {
       setCount(1);
       setButtonText("Stop");
-      // timerBox.style.display = "block";
+
       setDisplayTimer("block");
-      // setSeconds(3)
+      // setTimerVisiblity(1);
       setIsActive(true);
     } else {
       setCount(0);
       setButtonText("Play");
-      console.log("in else block of change count");
+
       time.setSeconds(time.getSeconds() + 3);
-      // timerBox.style.visibility = "visible";
+
       setDisplayTimer("none");
       setSeconds(3);
       setDataSet(0);
       setIsActive(false);
+      console.log("frefer");
+      // localStorage.clear();
     }
   };
   let i = 0;
-  console.log(isActive);
+  // console.log(isActive);
   let dataCount = 0;
   let timer = null;
   return (
@@ -101,7 +104,7 @@ const Mainscreen = React.memo(() => {
                   let newColorArray = localStorage
                     .getItem("colorArray")
                     .split(",");
-                  console.log(newArray);
+                  // console.log(newArray);
 
                   const getData = fetchData[parseInt(newArray[i])];
                   let j = i;
@@ -134,23 +137,28 @@ const Mainscreen = React.memo(() => {
         >
           {buttonText}
         </Button>
-        <div id="displayTimerContent" style={{ display: displayTimer }}>
-          <Avatar id="timer" className={classes.timer}>
-            <Typography variant="h1" className={classes.typo2}>
-              {/* <Timer isActive={isActive} countDownStartsFrom={seconds} /> */}
-              {/* {console.log(time)} */}
-              {{ isActive } && (
-                <MyTimer
-                  expiryTimestamp={time}
-                  count={count}
-                  setDisplayTimer={setDisplayTimer}
-                  setDataSet={setDataSet}
-                />
-              )}
-              {seconds}
-            </Typography>
-          </Avatar>
-        </div>
+        {timerVisiblity === 0 ? (
+          <div id="displayTimerContent" style={{ display: displayTimer }}>
+            <Avatar id="timer" className={classes.timer}>
+              <Typography variant="h1" className={classes.typo2}>
+                {{ isActive } && (
+                  <MyTimer
+                    expiryTimestamp={time}
+                    count={count}
+                    setDisplayTimer={setDisplayTimer}
+                    setDataSet={setDataSet}
+                    setTimerVisiblity={setTimerVisiblity}
+                  />
+                )}
+                {seconds}
+              </Typography>
+            </Avatar>
+          </div>
+        ) : (
+          <div className={classes.resultBarStyle}>
+            <ResultBar />
+          </div>
+        )}
       </div>
     </Box>
   );

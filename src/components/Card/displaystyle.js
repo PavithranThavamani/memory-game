@@ -28,6 +28,17 @@ export default makeStyles(() => ({
     height: "70px",
     backgroundColor: "white",
   },
+  avatarBlack: {
+    // paddingTop: "10px",
+    marginTop: "30px",
+    // marginLeft: "20px",
+    width: "70px",
+    height: "70px",
+    backgroundColor: "white",
+    color: "black",
+    textAlign: "center",
+    alignSelf: "center",
+  },
   avatarColor1: {
     width: "35px",
     height: "35px",
