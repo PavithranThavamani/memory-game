@@ -73,11 +73,10 @@ const Mainscreen = React.memo(() => {
       time.setSeconds(time.getSeconds() + 3);
 
       setDisplayTimer("none");
+      setTimerVisiblity(0);
       setSeconds(3);
       setDataSet(0);
       setIsActive(false);
-      console.log("frefer");
-      // localStorage.clear();
     }
   };
   let i = 0;

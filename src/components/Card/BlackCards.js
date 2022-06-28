@@ -19,9 +19,38 @@ const BlackCards = ({ type }) => {
 
   const classes = useStyle();
 
-  const leftColorCompareHandler = () => {};
+  const leftColorCompareHandler = () => {
+    console.log("Left");
 
-  const rightColorCompareHandler = () => {};
+    let getColorArray = localStorage.getItem("colorArray").split(",");
+
+    let cardColor = document.getElementById("greenCard");
+    let style = getComputedStyle(cardColor);
+    let avatar1Color = style["backgroundColor"];
+    let hex = rgbToHex(avatar1Color);
+    console.log(hex);
+
+    if (hex == "#00c853") {
+      console.log("Green");
+      document.getElementById("blackCard").style.backgroundColor = "#00c853";
+    }
+  };
+
+  const rightColorCompareHandler = () => {
+    console.log("Right");
+
+    let getColorArray = localStorage.getItem("colorArray").split(",");
+
+    let cardColor = document.getElementById("redCard");
+    let style = getComputedStyle(cardColor);
+    let avatar1Color = style["backgroundColor"];
+    let hex = rgbToHex(avatar1Color);
+    console.log(hex);
+
+    if (hex == "#ff0000") {
+      console.log("Red");
+    }
+  };
 
   // const leftColorCompareHandler = () => {
   //   console.log("Left");
