@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -7,121 +7,106 @@ import {
   Button,
   rgbToHex,
 } from "@material-ui/core";
+import CheckIcon from "@material-ui/icons/Check";
+import ClearIcon from "@material-ui/icons/Clear";
 
 import LocationCityIcon from "@material-ui/icons/LocationCity";
 import FlagIcon from "@material-ui/icons/Flag";
 
 import useStyle from "./displaystyle";
 
-const BlackCards = ({ type }) => {
-  const [count, setCount] = useState(0);
-  const [colorValue, setColorValue] = useState(0);
+const BlackCards = ({
+  cardid,
+  type,
+  setCorrectAnswered,
+  setWrongAnswered,
+  setUnanswered,
+}) => {
+  const [correct, setCorrect] = useState(0);
+
+  const [button, setButton] = useState(false);
 
   const classes = useStyle();
 
   const leftColorCompareHandler = () => {
-    console.log("Left");
-
     let getColorArray = localStorage.getItem("colorArray").split(",");
 
-    let cardColor = document.getElementById("greenCard");
-    let style = getComputedStyle(cardColor);
+    let greenCardColor = document.getElementById(`greenCard${cardid + 1}`);
+    let redCardColor = document.getElementById(`redCard${cardid + 1}`);
+
+    let style = getComputedStyle(greenCardColor);
     let avatar1Color = style["backgroundColor"];
     let hex = rgbToHex(avatar1Color);
-    console.log(hex);
 
-    if (hex == "#00c853") {
-      console.log("Green");
-      document.getElementById("blackCard").style.backgroundColor = "#00c853";
+    let colorState = 0;
+    if (hex === "#ff0000") {
+      colorState = 1;
+    } else {
+      colorState = 0;
+    }
+    setButton(true);
+    if (colorState == getColorArray[cardid]) {
+      greenCardColor.style.backgroundColor = "#00c853";
+      redCardColor.style.backgroundColor = "#00c853";
+      document.getElementById(`blackCard${cardid + 1}`).style.backgroundColor =
+        "#00c853";
+      setCorrect(1);
+      console.log("FEFW");
+      setCorrectAnswered(true);
+    } else {
+      greenCardColor.style.backgroundColor = "#ff0000";
+      redCardColor.style.backgroundColor = "#ff0000";
+      document.getElementById(`blackCard${cardid + 1}`).style.backgroundColor =
+        "#ff0000";
+      setCorrect(2);
+      console.log("wer");
+      setWrongAnswered(true);
     }
   };
 
   const rightColorCompareHandler = () => {
-    console.log("Right");
-
     let getColorArray = localStorage.getItem("colorArray").split(",");
 
-    let cardColor = document.getElementById("redCard");
-    let style = getComputedStyle(cardColor);
+    // console.log(getColorArray);
+    let redCardColor = document.getElementById(`redCard${cardid + 1}`);
+    let greenCardColor = document.getElementById(`greenCard${cardid + 1}`);
+    let redCardButton = document.getElementById(`redCardButton${cardid + 1}`);
+    let greenCardButton = document.getElementById(
+      `greenCardButton${cardid + 1}`
+    );
+    let style = getComputedStyle(redCardColor);
     let avatar1Color = style["backgroundColor"];
     let hex = rgbToHex(avatar1Color);
-    console.log(hex);
-
-    if (hex == "#ff0000") {
-      console.log("Red");
+    // console.log(hex);
+    let colorState = 0;
+    if (hex === "#ff0000") {
+      colorState = 1;
+    } else {
+      colorState = 0;
+    }
+    // console.log(redCardButton);
+    setButton(true);
+    if (colorState == getColorArray[cardid]) {
+      // console.log("Red");
+      redCardColor.style.backgroundColor = "#ff0000";
+      greenCardColor.style.backgroundColor = "#ff0000";
+      document.getElementById(`blackCard${cardid + 1}`).style.backgroundColor =
+        "#ff0000";
+      setCorrect(1);
+      setCorrectAnswered(true);
+    } else {
+      redCardColor.style.backgroundColor = "#00c853";
+      greenCardColor.style.backgroundColor = "#00c853";
+      document.getElementById(`blackCard${cardid + 1}`).style.backgroundColor =
+        "#00c853";
+      setCorrect(2);
+      setWrongAnswered(true);
     }
   };
-
-  // const leftColorCompareHandler = () => {
-  //   console.log("Left");
-  //   let getColorArray = localStorage.getItem("colorArray").split(",");
-
-  //   let cardColor = document.getElementById("greenCard");
-  //   let style = getComputedStyle(cardColor);
-  //   let avatar1Color = style["backgroundColor"];
-  //   let hex = rgbToHex(avatar1Color);
-  //   if (hex === "#00c853") {
-  //     // const colorValue = 0;
-  //     setColorValue(0);
-  //     console.log("green");
-  //     console.log(colorValue);
-  //   } else {
-  //     // const colorValue = 1;
-  //     setColorValue(1);
-  //     console.log("red");
-  //     console.log(colorValue);
-  //   }
-
-  //   console.log(getColorArray[0]);
-  //   console.log(typeof getColorArray[0]);
-
-  //   if (colorValue == getColorArray[0]) {
-  //     console.log("true");
-  //     document.getElementById("blackCard").style.backgroundColor = "#00c853";
-  //     document.getElementById("redCard").style.display = "none";
-  //   } else {
-  //     console.log("false");
-  //     document.getElementById("blackCard").style.backgroundColor = "red";
-  //     document.getElementById("greenCard").style.display = "none";
-  //   }
-  // };
-
-  // const rightColorCompareHandler = () => {
-  //   console.log("Right");
-  //   let getColorArray = localStorage.getItem("colorArray").split(",");
-  //   let cardColor = document.getElementById("redCard");
-  //   let style = getComputedStyle(cardColor);
-  //   let avatar2Color = style["backgroundColor"];
-  //   let hex = rgbToHex(avatar2Color);
-  //   console.log(typeof colorValue);
-  //   if (hex === "#00c853") {
-  //     // let colorValue = 0;
-  //     setColorValue(0);
-  //     console.log("green");
-  //     console.log(colorValue);
-  //   } else {
-  //     // let colorValue = 1;
-  //     setColorValue(1);
-  //     console.log("red");
-  //     console.log(colorValue);
-  //   }
-
-  //   console.log(getColorArray[0]);
-  //   console.log(typeof getColorArray[0]);
-
-  //   if (colorValue == getColorArray[0]) {
-  //     console.log("true");
-  //     document.getElementById("blackCard").style.backgroundColor = "red";
-  //     document.getElementById("greenCard").style.display = "none";
-  //   } else {
-  //     console.log("false");
-  //     document.getElementById("blackCard").style.backgroundColor = "#00c853";
-  //     document.getElementById("redCard").style.display = "none";
-  //   }
-  // };
+  useEffect(() => {}, [correct]);
 
   return (
-    <Card id="blackCard" className={classes.blackCard1}>
+    <Card id={`blackCard${cardid + 1}`} className={classes.blackCard1}>
       <CardContent className={classes.content}>
         <div
           style={{
@@ -130,11 +115,27 @@ const BlackCards = ({ type }) => {
             justifyContent: "space-between",
           }}
         >
-          <Avatar className={classes.avatarColor1} id="greenCard">
-            <Button onClick={leftColorCompareHandler}></Button>
+          <Avatar
+            className={classes.avatarColor1}
+            id={`greenCard${cardid + 1}`}
+          >
+            <Button
+              disabled={button}
+              id={`greenCardButton${cardid + 1}`}
+              onClick={leftColorCompareHandler}
+            >
+              {" "}
+            </Button>
           </Avatar>
-          <Avatar className={classes.avatarColor2} id="redCard">
-            <Button onClick={rightColorCompareHandler}></Button>
+          <Avatar className={classes.avatarColor2} id={`redCard${cardid + 1}`}>
+            <Button
+              disabled={button}
+              id={`redCardButton${cardid + 1}`}
+              onClick={rightColorCompareHandler}
+            >
+              {correct === 1 ? <CheckIcon style={{ color: "white" }} /> : ""}
+              {correct === 2 ? <ClearIcon style={{ color: "white" }} /> : ""}
+            </Button>
           </Avatar>
         </div>
         <div>

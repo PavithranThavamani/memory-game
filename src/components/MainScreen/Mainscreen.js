@@ -6,13 +6,13 @@ import useStyles from "./mainscreenstyle.js";
 import axios from "axios";
 import AllCards from "../Card/AllCards.js";
 import FetchedDataCard from "../Card/FetchedDataCard.js";
-// import Timer from "./MyTimer.js";
+
 import MyTimer from "./MyTimer.js";
 import BlackCards from "../Card/BlackCards.js";
 
 import ResultBar from "./ResultBar.js";
-// const timerBox = document.getElementById("displayTimerContent");
-const Mainscreen = React.memo(() => {
+
+const Mainscreen = () => {
   const [buttonText, setButtonText] = useState("PLAY");
   const [count, setCount] = useState(0);
   const [fetchData, setFetchData] = useState();
@@ -22,24 +22,23 @@ const Mainscreen = React.memo(() => {
   const [dummy, setDummy] = useState(0);
   const [dataSet, setDataSet] = useState(0);
   const [timerVisiblity, setTimerVisiblity] = useState(0);
+  const [correctAnswered, setCorrectAnswered] = useState(false);
+  const [wrongAnswered, setWrongAnswered] = useState(false);
+  const [unanswered, setUnaswered] = useState(false);
+
   const classes = useStyles();
-  // useEffect(() => {}, []);
+
   const time = new Date();
   time.setSeconds(time.getSeconds() + 3);
-  // const expiryTimestamp = time;
+
   const fetchHandler = async () => {
     const response = await axios.get("http://localhost:3000/cardData");
 
     setFetchData(response.data);
-    // console.log(response.data);
 
     changeCount();
     getArray();
   };
-
-  // useEffect((e) => {
-  //   e.preventDefault();
-  // }, []);
 
   const getArray = () => {
     let array = [];
@@ -49,7 +48,7 @@ const Mainscreen = React.memo(() => {
         array.push(Math.floor(Math.random() * 27));
         colorArray.push(Math.floor(Math.random() * 2));
       }
-      // setSet(array);
+
       setDummy(1);
       localStorage.setItem("array", array);
       localStorage.setItem("colorArray", colorArray);
@@ -64,7 +63,7 @@ const Mainscreen = React.memo(() => {
       setButtonText("Stop");
 
       setDisplayTimer("block");
-      // setTimerVisiblity(1);
+
       setIsActive(true);
     } else {
       setCount(0);
@@ -80,9 +79,20 @@ const Mainscreen = React.memo(() => {
     }
   };
   let i = 0;
-  // console.log(isActive);
+
   let dataCount = 0;
-  let timer = null;
+  // let timer = null;
+  // console.log(correctAnswered);
+  // console.log(wrongAnswered);
+
+  // const answerHandler = () => {
+  //   console.log("Changed");
+  // };
+
+  // useEffect(() => {
+  //   answerHandler();
+  // }, [correctAnswered, wrongAnswered]);
+
   return (
     <Box className={classes.box}>
       <div className={classes.box1}>
@@ -103,7 +113,6 @@ const Mainscreen = React.memo(() => {
                   let newColorArray = localStorage
                     .getItem("colorArray")
                     .split(",");
-                  // console.log(newArray);
 
                   const getData = fetchData[parseInt(newArray[i])];
                   let j = i;
@@ -118,7 +127,13 @@ const Mainscreen = React.memo(() => {
                           colorIndex={parseInt(newColorArray[j])}
                         />
                       ) : (
-                        <BlackCards type={getData} />
+                        <BlackCards
+                          cardid={index}
+                          type={getData}
+                          setCorrectAnswered={setCorrectAnswered}
+                          setWrongAnswered={setWrongAnswered}
+                          setUnaswered={setUnaswered}
+                        />
                       )}
                     </li>
                   );
@@ -155,12 +170,17 @@ const Mainscreen = React.memo(() => {
           </div>
         ) : (
           <div className={classes.resultBarStyle}>
-            <ResultBar />
+            <ResultBar
+              correctAnswered={correctAnswered}
+              wrongAnswered={wrongAnswered}
+              setCorrectAnswered={setCorrectAnswered}
+              setWrongAnswered={setWrongAnswered}
+            />
           </div>
         )}
       </div>
     </Box>
   );
-});
+};
 
 export default Mainscreen;
