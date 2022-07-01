@@ -5,56 +5,92 @@ import { Bar } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js/auto";
 import { Chart } from "react-chartjs-2";
 
-const ResultBar = ({ correctAnswered, wrongAnswered, unanswered }) => {
-  const [a, seta] = useState(0);
-  const [b, setb] = useState(0);
-  const [c, setc] = useState(15);
-
+function ResultBar({
+  correctAnswered,
+  wrongAnswered,
+  unanswered,
+  chartData,
+  setChartData,
+  a,
+  b,
+  c,
+  seta,
+  setb,
+  setc,
+}) {
+  //   const [a, seta] = useState(0);
+  //   const [b, setb] = useState(0);
+  //   const [c, setc] = useState(15);
   console.log("===========");
 
   console.log(a, b, c);
 
-  const [chartData, setChartData] = useState({
-    labels: ["Correct answers", "Wrong answers", "unanswered"],
-    datasets: [
-      {
-        label: "score",
-        data: [a, b, c],
-        backgroundColor: "blue",
-        barThickness: 30,
-      },
-    ],
-  });
+  //   const [chartData, setChartData] = useState({
+  //     labels: ["Correct answers", "Wrong answers", "unanswered"],
+  //     datasets: [
+  //       {
+  //         label: "score",
+  //         data: [a, b, c],
+  //         backgroundColor: "blue",
+  //         barThickness: 30,
+  //       },
+  //     ],
+  //   });
+  //   useEffect(() => {
+  //     //********* */
+  //     console.log("CHECK", a, b, c);
+  //     setChartData({
+  //       labels: ["Correct answers", "Wrong answers", "unanswered"],
+  //       datasets: [
+  //         {
+  //           label: "score",
+  //           data: [a, b, c],
+  //           backgroundColor: "blue",
+  //           barThickness: 30,
+  //         },
+  //       ],
+  //     });
+  //   }, [a, b, c]);
 
-  useEffect(() => {
-    //********* */
-    console.log("CHECK", a, b, c);
-    setChartData({
-      labels: ["Correct answers", "Wrong answers", "unanswered"],
-      datasets: [
-        {
-          label: "score",
-          data: [a, b, c],
-          backgroundColor: "blue",
-          barThickness: 30,
-        },
-      ],
-    });
-  }, [a, b, c]);
+  //   useEffect(() => {
+  //     setChartData({
+  //       labels: ["Correct answers", "Wrong answers", "unanswered"],
+  //       datasets: [
+  //         {
+  //           label: "score",
+  //           data: [a, b, c],
+  //           backgroundColor: "blue",
+  //           barThickness: 30,
+  //         },
+  //       ],
+  //     });
+  //   }, [correctAnswered, wrongAnswered, unanswered]);
 
-  useEffect(() => {
-    //******** */
-    seta(correctAnswered.length);
-    setb(wrongAnswered.length);
-    setc(unanswered.length);
+  //   useEffect(() => {
+  //     //******** */
+  //     seta(correctAnswered.length);
+  //     setb(wrongAnswered.length);
+  //     setc(unanswered.length);
 
-    console.log(
-      `ue1 ${correctAnswered.length} ${wrongAnswered.length} ${unanswered.length}`
-    );
-    console.log(`ue1 ${a} ${b} ${c}`);
-  }, [correctAnswered, wrongAnswered, unanswered]);
+  //     console.log(
+  //       `ue1 ${correctAnswered.length} ${wrongAnswered.length} ${unanswered.length}`
+  //     );
+  //     console.log(`ue1 ${a} ${b} ${c}`);
+  //   }, [correctAnswered, wrongAnswered, unanswered]);
 
-  //   useEffect(() => {}, [a, b, c]);
+  //   useEffect(() => {
+  //     setChartData({
+  //       labels: ["Correct answers", "Wrong answers", "unanswered"],
+  //       datasets: [
+  //         {
+  //           label: "score",
+  //           data: [a, b, c],
+  //           backgroundColor: "blue",
+  //           barThickness: 30,
+  //         },
+  //       ],
+  //     });
+  //   }, [a, b, c]);
 
   return (
     <div>
@@ -85,6 +121,6 @@ const ResultBar = ({ correctAnswered, wrongAnswered, unanswered }) => {
       />
     </div>
   );
-};
+}
 
 export default ResultBar;

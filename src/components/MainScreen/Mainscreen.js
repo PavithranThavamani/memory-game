@@ -12,6 +12,11 @@ import BlackCards from "../Card/BlackCards.js";
 
 import ResultBar from "./ResultBar.js";
 
+import { Bar } from "react-chartjs-2";
+
+import { Chart as ChartJS } from "chart.js/auto";
+import { Chart } from "react-chartjs-2";
+
 const Mainscreen = () => {
   const [buttonText, setButtonText] = useState("PLAY");
   const [count, setCount] = useState(0);
@@ -27,6 +32,22 @@ const Mainscreen = () => {
   const [unanswered, setUnanswered] = useState([
     1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
   ]);
+
+  const [a, seta] = useState(0);
+  const [b, setb] = useState(0);
+  const [c, setc] = useState(15);
+
+  const [chartData, setChartData] = useState({
+    labels: ["Correct answers", "Wrong answers", "unanswered"],
+    datasets: [
+      {
+        label: "score",
+        data: [a, b, c],
+        backgroundColor: "blue",
+        barThickness: 30,
+      },
+    ],
+  });
 
   const classes = useStyles();
 
@@ -68,6 +89,9 @@ const Mainscreen = () => {
       setButtonText("Stop");
       setDisplayTimer("block");
       setIsActive(true);
+      seta(correctAnswered.length);
+      setb(wrongAnswered.length);
+      setc(unanswered.length);
     } else {
       setCount(0);
       setButtonText("Play");
@@ -77,6 +101,9 @@ const Mainscreen = () => {
       setSeconds(3);
       setDataSet(0);
       setIsActive(false);
+      seta(0);
+      setb(0);
+      setc(15);
     }
   };
   let i = 0;
@@ -84,13 +111,32 @@ const Mainscreen = () => {
   let dataCount = 0;
 
   useEffect(() => {
-    // answerHandler();
-    // console.log(correctAnswered,wrongAnswered,unanswered)
-  }, [correctAnswered, wrongAnswered]);
+    seta(correctAnswered.length);
+    setb(wrongAnswered.length);
+    setc(unanswered.length);
+  }, [a, b, c, correctAnswered, wrongAnswered, unanswered]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    seta(correctAnswered.length);
+    setb(wrongAnswered.length);
+    setc(unanswered.length);
+  }, [a, b, c]);
 
-  useEffect(() => {}, [setCorrectAnswered, setWrongAnswered, setUnanswered]);
+  useEffect(() => {}, [a, b, c, correctAnswered, wrongAnswered, unanswered]);
+
+  useEffect(() => {
+    setChartData({
+      labels: ["Correct answers", "Wrong answers", "unanswered"],
+      datasets: [
+        {
+          label: "score",
+          data: [a, b, c],
+          backgroundColor: "blue",
+          barThickness: 30,
+        },
+      ],
+    });
+  }, [a, b, c]);
 
   return (
     <Box className={classes.box}>
@@ -171,13 +217,47 @@ const Mainscreen = () => {
             </Avatar>
           </div>
         ) : (
-          <div className={classes.resultBarStyle}>
-            <ResultBar
+          <div>
+            {/* <ResultBar
               correctAnswered={correctAnswered}
               wrongAnswered={wrongAnswered}
               unanswered={unanswered}
               setCorrectAnswered={setCorrectAnswered}
               setWrongAnswered={setWrongAnswered}
+              chartData={chartData}
+              setChartData={setChartData}
+              a={a}
+              b={b}
+              c={c}
+              seta={seta}
+              setb={setb}
+              setc={setc}
+            /> */}
+
+            <Bar
+              data={chartData}
+              height="500px"
+              width="350px"
+              redraw
+              options={{
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: {
+                    display: false,
+                  },
+                },
+                responsive: true,
+                scales: {
+                  y: {
+                    max: 15,
+                    min: 0,
+                    ticks: {
+                      stepSize: 1,
+                    },
+                  },
+                },
+              }}
             />
           </div>
         )}

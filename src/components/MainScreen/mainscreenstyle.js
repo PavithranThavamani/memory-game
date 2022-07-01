@@ -53,8 +53,8 @@ export default makeStyles(() => ({
     fontSize: "150px",
   },
 
-  resultBarStyle: {
-    height: "350px",
-    // backgroundColor: "red",
-  },
+  // resultBarStyle: {
+  //   height: "350px",
+  //   // backgroundColor: "red",
+  // },
 }));

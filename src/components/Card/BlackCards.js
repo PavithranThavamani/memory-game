@@ -15,14 +15,14 @@ import FlagIcon from "@material-ui/icons/Flag";
 
 import useStyle from "./displaystyle";
 
-const BlackCards = ({
+function BlackCards({
   cardid,
   type,
   setCorrectAnswered,
   setWrongAnswered,
   setUnanswered,
   unanswered,
-}) => {
+}) {
   const [correct, setCorrect] = useState(0);
 
   const [button, setButton] = useState(false);
@@ -75,10 +75,10 @@ const BlackCards = ({
     // console.log(getColorArray);
     let redCardColor = document.getElementById(`redCard${cardid + 1}`);
     let greenCardColor = document.getElementById(`greenCard${cardid + 1}`);
-    let redCardButton = document.getElementById(`redCardButton${cardid + 1}`);
-    let greenCardButton = document.getElementById(
-      `greenCardButton${cardid + 1}`
-    );
+    // let redCardButton = document.getElementById(`redCardButton${cardid + 1}`);
+    // let greenCardButton = document.getElementById(
+    // `greenCardButton${cardid + 1}`
+    // );
     let style = getComputedStyle(redCardColor);
     let avatar1Color = style["backgroundColor"];
     let hex = rgbToHex(avatar1Color);
@@ -113,17 +113,16 @@ const BlackCards = ({
       setUnanswered(unanswered);
     }
   };
-  useEffect(() => {}, [correct]);
+  // useEffect(() => {}, [correct]);
 
-  useEffect(() => {}, [
-    setCorrectAnswered,
-    setWrongAnswered,
-    setUnanswered,
-    unanswered,
-  ]);
+  // useEffect(() => {}, [
+  //   setCorrectAnswered,
+  //   setWrongAnswered,
+  //   setUnanswered,
+  //   unanswered,
+  // ]);
 
   // useEffect(() => {}, [CheckIcon, ClearIcon]);
-
   return (
     <Card id={`blackCard${cardid + 1}`} className={classes.blackCard1}>
       <CardContent className={classes.content}>
@@ -174,6 +173,6 @@ const BlackCards = ({
       </CardContent>
     </Card>
   );
-};
+}
 
 export default BlackCards;
