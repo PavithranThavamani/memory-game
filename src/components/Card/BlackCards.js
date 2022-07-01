@@ -21,6 +21,7 @@ const BlackCards = ({
   setCorrectAnswered,
   setWrongAnswered,
   setUnanswered,
+  unanswered,
 }) => {
   const [correct, setCorrect] = useState(0);
 
@@ -52,7 +53,9 @@ const BlackCards = ({
         "#00c853";
       setCorrect(1);
       console.log("FEFW");
-      setCorrectAnswered(true);
+      setCorrectAnswered((arr) => [...arr, 1]);
+      unanswered.shift();
+      setUnanswered(unanswered);
     } else {
       greenCardColor.style.backgroundColor = "#ff0000";
       redCardColor.style.backgroundColor = "#ff0000";
@@ -60,7 +63,9 @@ const BlackCards = ({
         "#ff0000";
       setCorrect(2);
       console.log("wer");
-      setWrongAnswered(true);
+      setWrongAnswered((arr) => [...arr, 1]);
+      unanswered.shift();
+      setUnanswered(unanswered);
     }
   };
 
@@ -93,17 +98,31 @@ const BlackCards = ({
       document.getElementById(`blackCard${cardid + 1}`).style.backgroundColor =
         "#ff0000";
       setCorrect(1);
-      setCorrectAnswered(true);
+      setCorrectAnswered((arr) => [...arr, 1]);
+
+      unanswered.shift();
+      setUnanswered(unanswered);
     } else {
       redCardColor.style.backgroundColor = "#00c853";
       greenCardColor.style.backgroundColor = "#00c853";
       document.getElementById(`blackCard${cardid + 1}`).style.backgroundColor =
         "#00c853";
       setCorrect(2);
-      setWrongAnswered(true);
+      setWrongAnswered((arr) => [...arr, 1]);
+      unanswered.shift();
+      setUnanswered(unanswered);
     }
   };
   useEffect(() => {}, [correct]);
+
+  useEffect(() => {}, [
+    setCorrectAnswered,
+    setWrongAnswered,
+    setUnanswered,
+    unanswered,
+  ]);
+
+  // useEffect(() => {}, [CheckIcon, ClearIcon]);
 
   return (
     <Card id={`blackCard${cardid + 1}`} className={classes.blackCard1}>

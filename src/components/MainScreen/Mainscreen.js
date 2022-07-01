@@ -22,9 +22,11 @@ const Mainscreen = () => {
   const [dummy, setDummy] = useState(0);
   const [dataSet, setDataSet] = useState(0);
   const [timerVisiblity, setTimerVisiblity] = useState(0);
-  const [correctAnswered, setCorrectAnswered] = useState(false);
-  const [wrongAnswered, setWrongAnswered] = useState(false);
-  const [unanswered, setUnaswered] = useState(false);
+  const [correctAnswered, setCorrectAnswered] = useState([]);
+  const [wrongAnswered, setWrongAnswered] = useState([]);
+  const [unanswered, setUnanswered] = useState([
+    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+  ]);
 
   const classes = useStyles();
 
@@ -35,6 +37,9 @@ const Mainscreen = () => {
     const response = await axios.get("http://localhost:3000/cardData");
 
     setFetchData(response.data);
+    setCorrectAnswered([]);
+    setWrongAnswered([]);
+    setUnanswered([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
 
     changeCount();
     getArray();
@@ -61,16 +66,12 @@ const Mainscreen = () => {
     if (count === 0) {
       setCount(1);
       setButtonText("Stop");
-
       setDisplayTimer("block");
-
       setIsActive(true);
     } else {
       setCount(0);
       setButtonText("Play");
-
       time.setSeconds(time.getSeconds() + 3);
-
       setDisplayTimer("none");
       setTimerVisiblity(0);
       setSeconds(3);
@@ -81,17 +82,15 @@ const Mainscreen = () => {
   let i = 0;
 
   let dataCount = 0;
-  // let timer = null;
-  // console.log(correctAnswered);
-  // console.log(wrongAnswered);
 
-  // const answerHandler = () => {
-  //   console.log("Changed");
-  // };
+  useEffect(() => {
+    // answerHandler();
+    // console.log(correctAnswered,wrongAnswered,unanswered)
+  }, [correctAnswered, wrongAnswered]);
 
-  // useEffect(() => {
-  //   answerHandler();
-  // }, [correctAnswered, wrongAnswered]);
+  useEffect(() => {}, []);
+
+  useEffect(() => {}, [setCorrectAnswered, setWrongAnswered, setUnanswered]);
 
   return (
     <Box className={classes.box}>
@@ -132,7 +131,10 @@ const Mainscreen = () => {
                           type={getData}
                           setCorrectAnswered={setCorrectAnswered}
                           setWrongAnswered={setWrongAnswered}
-                          setUnaswered={setUnaswered}
+                          setUnanswered={setUnanswered}
+                          correctAnswered={correctAnswered}
+                          wrongAnswered={wrongAnswered}
+                          unanswered={unanswered}
                         />
                       )}
                     </li>
@@ -173,6 +175,7 @@ const Mainscreen = () => {
             <ResultBar
               correctAnswered={correctAnswered}
               wrongAnswered={wrongAnswered}
+              unanswered={unanswered}
               setCorrectAnswered={setCorrectAnswered}
               setWrongAnswered={setWrongAnswered}
             />
