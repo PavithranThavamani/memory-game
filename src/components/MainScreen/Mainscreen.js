@@ -70,18 +70,33 @@ const Mainscreen = () => {
     let array = [];
     let colorArray = [];
     if (dummy === 0) {
-      for (let i = 0; i < 15; i++) {
-        array.push(Math.floor(Math.random() * 27));
-        colorArray.push(Math.floor(Math.random() * 2));
-      }
+  
+        for (let i = 0; i < 15; i++) {
 
+          let flag = true;
+        
+          do {
+            let newData = Math.floor(Math.random() * 27)
+
+            if (!array.includes(newData)) {
+              
+              array.push(newData)
+             flag = false;
+            }
+
+          } while (flag);
+          colorArray.push(Math.floor(Math.random() * 2));
+        }
+      
       setDummy(1);
+
       localStorage.setItem("array", array);
       localStorage.setItem("colorArray", colorArray);
+    
     }
-    console.log(array);
-    console.log(colorArray);
+ 
   };
+ 
 
   const changeCount = () => {
     if (count === 0) {
@@ -89,21 +104,17 @@ const Mainscreen = () => {
       setButtonText("Stop");
       setDisplayTimer("block");
       setIsActive(true);
-      seta(correctAnswered.length);
-      setb(wrongAnswered.length);
-      setc(unanswered.length);
+
     } else {
       setCount(0);
       setButtonText("Play");
-      time.setSeconds(time.getSeconds() + 3);
+      // time.setSeconds(time.getSeconds() + 3);
       setDisplayTimer("none");
       setTimerVisiblity(0);
-      setSeconds(3);
+      // setSeconds(3);
       setDataSet(0);
       setIsActive(false);
-      seta(0);
-      setb(0);
-      setc(15);
+    
     }
   };
   let i = 0;
@@ -159,7 +170,11 @@ const Mainscreen = () => {
                     .getItem("colorArray")
                     .split(",");
 
+
+
                   const getData = fetchData[parseInt(newArray[i])];
+                  // const getData = fetchData[Math.floor(Math.random() * newArray.length)];
+
                   let j = i;
                   i = i + 1;
                   dataCount = dataCount + 1;
@@ -172,6 +187,7 @@ const Mainscreen = () => {
                           colorIndex={parseInt(newColorArray[j])}
                         />
                       ) : (
+                        
                         <BlackCards
                           cardid={index}
                           type={getData}
@@ -210,6 +226,7 @@ const Mainscreen = () => {
                     setDisplayTimer={setDisplayTimer}
                     setDataSet={setDataSet}
                     setTimerVisiblity={setTimerVisiblity}
+                    // newArray = {newArray}
                   />
                 )}
                 {seconds}

@@ -8,14 +8,21 @@ function MyTimer({
   setDisplayTimer,
   setDataSet,
   setTimerVisiblity,
+  // newArray
 }) {
+
+  // let newArray = localStorage.getItem("array")
   const { seconds, pause, restart } = useTimer({
     expiryTimestamp,
     onExpire: () => {
       setDisplayTimer("none");
+      //  newArray.sort((a, b) => 0.5 - Math.random());
+      // localStorage.setItem("array",newArray)
+      arrayHandler()
       setDataSet(1);
 
       setTimerVisiblity(1);
+      // let dataArray = localStorage.getItem("array").split(',')
     },
   });
 
@@ -27,6 +34,14 @@ function MyTimer({
       restart(time);
     }
   }, [count]);
+
+  const arrayHandler = () => {
+    let newArray = localStorage.getItem("array").split(",")
+    console.log(newArray)
+    newArray.sort((a, b) => 0.5 - Math.random());
+    localStorage.setItem("array",newArray)
+    console.log(newArray)
+  }
 
   return (
     <div>
