@@ -38,6 +38,7 @@ function BlackCards({
     let style = getComputedStyle(greenCardColor);
     let avatar1Color = style["backgroundColor"];
     let hex = rgbToHex(avatar1Color);
+    console.log(hex);
 
     let colorState = 0;
     if (hex === "#ff0000") {
@@ -75,14 +76,12 @@ function BlackCards({
     // console.log(getColorArray);
     let redCardColor = document.getElementById(`redCard${cardid + 1}`);
     let greenCardColor = document.getElementById(`greenCard${cardid + 1}`);
-    // let redCardButton = document.getElementById(`redCardButton${cardid + 1}`);
-    // let greenCardButton = document.getElementById(
-    // `greenCardButton${cardid + 1}`
-    // );
+
     let style = getComputedStyle(redCardColor);
     let avatar1Color = style["backgroundColor"];
+
     let hex = rgbToHex(avatar1Color);
-    // console.log(hex);
+    console.log(hex);
     let colorState = 0;
     if (hex === "#ff0000") {
       colorState = 1;
@@ -113,7 +112,7 @@ function BlackCards({
       setUnanswered(unanswered);
     }
   };
-  // useEffect(() => {}, [correct]);
+  useEffect(() => {}, [correct]);
 
   // useEffect(() => {}, [
   //   setCorrectAnswered,

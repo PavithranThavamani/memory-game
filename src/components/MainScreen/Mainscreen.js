@@ -70,33 +70,26 @@ const Mainscreen = () => {
     let array = [];
     let colorArray = [];
     if (dummy === 0) {
-  
-        for (let i = 0; i < 15; i++) {
+      for (let i = 0; i < 15; i++) {
+        let flag = true;
 
-          let flag = true;
-        
-          do {
-            let newData = Math.floor(Math.random() * 27)
+        do {
+          let newData = Math.floor(Math.random() * 27);
 
-            if (!array.includes(newData)) {
-              
-              array.push(newData)
-             flag = false;
-            }
+          if (!array.includes(newData)) {
+            array.push(newData);
+            flag = false;
+          }
+        } while (flag);
+        colorArray.push(Math.floor(Math.random() * 2));
+      }
 
-          } while (flag);
-          colorArray.push(Math.floor(Math.random() * 2));
-        }
-      
       setDummy(1);
 
       localStorage.setItem("array", array);
       localStorage.setItem("colorArray", colorArray);
-    
     }
- 
   };
- 
 
   const changeCount = () => {
     if (count === 0) {
@@ -104,19 +97,24 @@ const Mainscreen = () => {
       setButtonText("Stop");
       setDisplayTimer("block");
       setIsActive(true);
-
     } else {
       setCount(0);
       setButtonText("Play");
-      // time.setSeconds(time.getSeconds() + 3);
       setDisplayTimer("none");
       setTimerVisiblity(0);
-      // setSeconds(3);
       setDataSet(0);
       setIsActive(false);
-    
+      fetchAgain();
     }
   };
+
+  const fetchAgain = async () => {
+    const response = await axios.get("http://localhost:3000/cardData");
+
+    setFetchData(response.data);
+    getArray();
+  };
+
   let i = 0;
 
   let dataCount = 0;
@@ -125,29 +123,25 @@ const Mainscreen = () => {
     seta(correctAnswered.length);
     setb(wrongAnswered.length);
     setc(unanswered.length);
-  }, [a, b, c, correctAnswered, wrongAnswered, unanswered]);
-
+  }, [correctAnswered, wrongAnswered, unanswered]);
   useEffect(() => {
-    seta(correctAnswered.length);
-    setb(wrongAnswered.length);
-    setc(unanswered.length);
-  }, [a, b, c]);
-
-  useEffect(() => {}, [a, b, c, correctAnswered, wrongAnswered, unanswered]);
-
-  useEffect(() => {
+    console.log("CHECK", a, b, c);
     setChartData({
       labels: ["Correct answers", "Wrong answers", "unanswered"],
       datasets: [
         {
           label: "score",
           data: [a, b, c],
+          // data: dataArray,
           backgroundColor: "blue",
           barThickness: 30,
         },
       ],
     });
   }, [a, b, c]);
+  useEffect(() => {
+    console.log(a, b, c, chartData);
+  }, [chartData]);
 
   return (
     <Box className={classes.box}>
@@ -170,8 +164,6 @@ const Mainscreen = () => {
                     .getItem("colorArray")
                     .split(",");
 
-
-
                   const getData = fetchData[parseInt(newArray[i])];
                   // const getData = fetchData[Math.floor(Math.random() * newArray.length)];
 
@@ -187,7 +179,6 @@ const Mainscreen = () => {
                           colorIndex={parseInt(newColorArray[j])}
                         />
                       ) : (
-                        
                         <BlackCards
                           cardid={index}
                           type={getData}

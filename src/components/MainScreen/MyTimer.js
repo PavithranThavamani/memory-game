@@ -10,15 +10,15 @@ function MyTimer({
   setTimerVisiblity,
   // newArray
 }) {
-
-  // let newArray = localStorage.getItem("array")
+  // let newArray = localStorage.getItem("array").split(",")
+  // let newColorArray = localStorage.getItem("colorArray").split(",")
   const { seconds, pause, restart } = useTimer({
     expiryTimestamp,
     onExpire: () => {
       setDisplayTimer("none");
       //  newArray.sort((a, b) => 0.5 - Math.random());
       // localStorage.setItem("array",newArray)
-      arrayHandler()
+      arrayHandler();
       setDataSet(1);
 
       setTimerVisiblity(1);
@@ -35,13 +35,34 @@ function MyTimer({
     }
   }, [count]);
 
+  // const arrayHandler = () => {
+  //   let newArray = localStorage.getItem("array").split(",")
+  //   console.log(newArray)
+  //   newArray.sort((a, b) => 0.5 - Math.random());
+  //   localStorage.setItem("array",newArray)
+  //   console.log(newArray)
+  // }
+
   const arrayHandler = () => {
-    let newArray = localStorage.getItem("array").split(",")
-    console.log(newArray)
-    newArray.sort((a, b) => 0.5 - Math.random());
-    localStorage.setItem("array",newArray)
-    console.log(newArray)
-  }
+    let newArray = localStorage.getItem("array").split(",");
+    let newColorArray = localStorage.getItem("colorArray").split(",");
+
+    let length = newArray.length;
+    // let temp1, temp2
+
+    while (length) {
+      let randomValue = Math.floor(Math.random() * length);
+      length -= 1;
+      let temp1 = newArray[length];
+      let temp2 = newColorArray[length];
+      newArray[length] = newArray[randomValue];
+      newColorArray[length] = newColorArray[randomValue];
+      newArray[randomValue] = temp1;
+      newColorArray[randomValue] = temp2;
+    }
+    localStorage.setItem("array", newArray);
+    localStorage.setItem("colorArray", newColorArray);
+  };
 
   return (
     <div>
