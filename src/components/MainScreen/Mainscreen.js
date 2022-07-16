@@ -10,8 +10,6 @@ import FetchedDataCard from "../Card/FetchedDataCard.js";
 import MyTimer from "./MyTimer.js";
 import BlackCards from "../Card/BlackCards.js";
 
-import ResultBar from "./ResultBar.js";
-
 import { Bar } from "react-chartjs-2";
 
 import { Chart as ChartJS } from "chart.js/auto";
@@ -52,7 +50,8 @@ const Mainscreen = () => {
   const classes = useStyles();
 
   const time = new Date();
-  time.setSeconds(time.getSeconds() + 3);
+  console.log(`time - ${time}, ${time.getSeconds() + 3}`);
+  // time.setSeconds(3);
 
   const fetchHandler = async () => {
     const response = await axios.get("http://localhost:3000/cardData");
@@ -67,6 +66,8 @@ const Mainscreen = () => {
   };
 
   const getArray = () => {
+    // localStorage.removeItem("array");
+    // localStorage.removeItem("colorArray");
     let array = [];
     let colorArray = [];
     if (dummy === 0) {
@@ -86,6 +87,7 @@ const Mainscreen = () => {
 
       setDummy(1);
 
+      sessionStorage.setItem("hello", "hello");
       localStorage.setItem("array", array);
       localStorage.setItem("colorArray", colorArray);
     }
@@ -93,27 +95,33 @@ const Mainscreen = () => {
 
   const changeCount = () => {
     if (count === 0) {
+      // localStorage.clear();
+      // getArray();
       setCount(1);
       setButtonText("Stop");
       setDisplayTimer("block");
       setIsActive(true);
     } else {
+      // localStorage.clear();
+      // getArray();
       setCount(0);
       setButtonText("Play");
       setDisplayTimer("none");
       setTimerVisiblity(0);
       setDataSet(0);
       setIsActive(false);
-      fetchAgain();
+      // fetchAgain();
     }
   };
 
-  const fetchAgain = async () => {
-    const response = await axios.get("http://localhost:3000/cardData");
+  // const fetchAgain = async () => {
+  //   localStorage.removeItem("array");
+  //   localStorage.removeItem("colorArray");
+  //   const response = await axios.get("http://localhost:3000/cardData");
 
-    setFetchData(response.data);
-    getArray();
-  };
+  //   setFetchData(response.data);
+  //   getArray();
+  // };
 
   let i = 0;
 
@@ -158,14 +166,12 @@ const Mainscreen = () => {
           >
             {fetchData &&
               fetchData.map((fetchedData, index) => {
+                let newArray = localStorage.getItem("array").split(",");
+                let newColorArray = localStorage
+                  .getItem("colorArray")
+                  .split(",");
                 if (dataCount < 15) {
-                  let newArray = localStorage.getItem("array").split(",");
-                  let newColorArray = localStorage
-                    .getItem("colorArray")
-                    .split(",");
-
                   const getData = fetchData[parseInt(newArray[i])];
-                  // const getData = fetchData[Math.floor(Math.random() * newArray.length)];
 
                   let j = i;
                   i = i + 1;
@@ -226,22 +232,6 @@ const Mainscreen = () => {
           </div>
         ) : (
           <div>
-            {/* <ResultBar
-              correctAnswered={correctAnswered}
-              wrongAnswered={wrongAnswered}
-              unanswered={unanswered}
-              setCorrectAnswered={setCorrectAnswered}
-              setWrongAnswered={setWrongAnswered}
-              chartData={chartData}
-              setChartData={setChartData}
-              a={a}
-              b={b}
-              c={c}
-              seta={seta}
-              setb={setb}
-              setc={setc}
-            /> */}
-
             <Bar
               data={chartData}
               height="500px"
@@ -255,7 +245,7 @@ const Mainscreen = () => {
                     display: false,
                   },
                 },
-                responsive: true,
+
                 scales: {
                   y: {
                     max: 15,
