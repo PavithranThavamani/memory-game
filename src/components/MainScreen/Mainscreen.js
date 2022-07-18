@@ -27,19 +27,28 @@ const Mainscreen = () => {
   const [timerVisiblity, setTimerVisiblity] = useState(0);
   const [correctAnswered, setCorrectAnswered] = useState([]);
   const [wrongAnswered, setWrongAnswered] = useState([]);
-  const [unanswered, setUnanswered] = useState([
-    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-  ]);
+  // const [unanswered, setUnanswered] = useState([
+  //   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+  // ]);
+
+  const [unanswered, setUnanswered] = useState([]);
+
+  // let dataCardCountArray = [];
+
+  // console.log(unanswered);
 
   const [a, seta] = useState(0);
   const [b, setb] = useState(0);
   const [c, setc] = useState(15);
+
+  // setUnanswered(dataCardCount);
 
   const [chartData, setChartData] = useState({
     labels: ["Correct answers", "Wrong answers", "unanswered"],
     datasets: [
       {
         label: "score",
+        // data;array,
         data: [a, b, c],
         backgroundColor: "blue",
         barThickness: 30,
@@ -59,10 +68,30 @@ const Mainscreen = () => {
     setFetchData(response.data);
     setCorrectAnswered([]);
     setWrongAnswered([]);
-    setUnanswered([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+    // setUnanswered([1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]);
+    // setUnanswered(dataCardCount);
+    setUnansweredArray();
+    console.log(unanswered);
 
     changeCount();
     getArray();
+  };
+
+  useEffect(() => {
+    setUnansweredArray();
+  }, []);
+
+  let dataCardCount = 15;
+
+  const setUnansweredArray = () => {
+    let dataCardCountArray = [];
+    // let dataCardCount = 15;
+    while (dataCardCount > 0) {
+      dataCardCountArray.push(1);
+      dataCardCount -= 1;
+    }
+    setUnanswered(dataCardCountArray);
+    console.log(dataCardCountArray);
   };
 
   const getArray = () => {
@@ -104,24 +133,15 @@ const Mainscreen = () => {
     } else {
       // localStorage.clear();
       // getArray();
+      setIsActive(false);
       setCount(0);
       setButtonText("Play");
       setDisplayTimer("none");
       setTimerVisiblity(0);
       setDataSet(0);
-      setIsActive(false);
       // fetchAgain();
     }
   };
-
-  // const fetchAgain = async () => {
-  //   localStorage.removeItem("array");
-  //   localStorage.removeItem("colorArray");
-  //   const response = await axios.get("http://localhost:3000/cardData");
-
-  //   setFetchData(response.data);
-  //   getArray();
-  // };
 
   let i = 0;
 
@@ -155,8 +175,9 @@ const Mainscreen = () => {
     <Box className={classes.box}>
       <div className={classes.box1}>
         {!count ? (
-          <AllCards />
+          <AllCards dataCardCount={dataCardCount} />
         ) : (
+          // <AllCards unanswered={unanswered} />
           <ul
             style={{
               display: "flex",

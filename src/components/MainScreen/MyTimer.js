@@ -15,7 +15,7 @@ function MyTimer({
       setDisplayTimer("none");
 
       arrayHandler();
-      // resetData();
+
       setDataSet(1);
 
       setTimerVisiblity(1);
@@ -50,10 +50,6 @@ function MyTimer({
     }
     localStorage.setItem("array", newArray);
     localStorage.setItem("colorArray", newColorArray);
-  };
-
-  const resetData = () => {
-    localStorage.clear();
   };
 
   return (

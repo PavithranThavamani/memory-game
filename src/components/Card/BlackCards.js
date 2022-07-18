@@ -114,19 +114,6 @@ function BlackCards({
   };
   useEffect(() => {}, [correct]);
 
-  // useEffect(() => {}, [
-  //   setCorrectAnswered,
-  //   setWrongAnswered,
-  //   setUnanswered,
-  //   unanswered,
-  // ]);
-
-  // useEffect(() => {}, [CheckIcon, ClearIcon]);
-
-  // useEffect(()=>{
-  //   let newArray = localStorage.getItem("array").split(",");
-  // },[])
-
   return (
     <Card id={`blackCard${cardid + 1}`} className={classes.blackCard1}>
       <CardContent className={classes.content}>
